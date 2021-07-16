@@ -1,0 +1,3 @@
+[submodule "mapmint"]
+	path = mapmint
+	url = https://github.com/ayoubft/mapmint.git
