@@ -14,6 +14,7 @@ services:
       - ./docker/.htaccess:/var/www/html/.htaccess
       - ./zoo-project/zoo-services/utils/open-api/templates/index.html:/var/www/index.html
       - ./zoo-project/zoo-services/utils/open-api/static:/var/www/html/static
+      - ./mapmint:/mapmint
     depends_on:
       - pgbouncer
     environment:
