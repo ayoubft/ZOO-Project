@@ -14,7 +14,7 @@ services:
       - ./docker/.htaccess:/var/www/html/.htaccess
       - ./zoo-project/zoo-services/utils/open-api/templates/index.html:/var/www/index.html
       - ./zoo-project/zoo-services/utils/open-api/static:/var/www/html/static
-      - ./templates/preview/get_3d_model.tmpl:/mapmint/mapmint-ui/templates/preview/get_3d_model.tmpl
+      - ./gsoc21-data/preview/get_3d_model.tmpl:/mapmint/mapmint-ui/templates/preview/get_3d_model.tmpl
     depends_on:
       - pgbouncer
     environment:
