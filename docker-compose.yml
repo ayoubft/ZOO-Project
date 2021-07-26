@@ -15,7 +15,7 @@ services:
       - ./zoo-project/zoo-services/utils/open-api/templates/index.html:/var/www/index.html
       - ./zoo-project/zoo-services/utils/open-api/static:/var/www/html/static
       - ./gsoc21-data/preview/get_3d_model.tmpl:/mapmint/mapmint-ui/templates/preview/get_3d_model.tmpl
-      - ./gsoc21-data/3dModels:/mapmint/3dModels
+      - ./gsoc21-data/3dModels:/var/www/html/3dModels
     depends_on:
       - pgbouncer
     environment:
