@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<!--
+# import os
+# import zoo
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MapMint 3D Viewer</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+      header {
+        font-size: large;
+        margin: 1cm;
+      }
+      #c {
+        width: 100%;
+        height: 90%;
+        display: block;
+        /* margin: 20px; */
+        /* For now */
+        /* background-color: black; */
+      }
+      #parent {
+        display: flex;
+        justify-content: space-around;
+      }
+
+      #left {
+        width: 80%;
+        height: 100hv;
+        padding: 10px;
+      }
+
+      #right {
+        margin: 10px;
+        background-color: lightgray;
+        width: 20%;
+        height: 100hv;
+        padding: 30px;
+      }
+      /* ////////// NAV BAR ////////// */
+      /* Add a black background color to the top navigation */
+      .topnav {
+        background-color: rgb(122, 129, 122);
+        overflow: hidden;
+      }
+
+      /* Style the links inside the navigation bar */
+      .topnav a {
+        float: right;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+      }
+
+      /* Change the color of links on hover */
+      .topnav a:hover {
+        background-color: rgb(241, 239, 239);
+        color: black;
+      }
+
+      /* Add a color to the active/current link */
+      .topnav a.active {
+        background-color: #61e6b5;
+        color: rgb(255, 255, 255);
+      }
+      button {
+		  color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topnav">
+      <a target="_blank" href="https://github.com/ayoubft/Journey-GSoC-21/wiki"
+        >About</a
+      >
+      <a class="active" href="http://localhost/ui/Dashboard_bs">Home</a>
+      <!-- <a href="#news">News</a>
+      <a href="#contact">Contact</a> -->
+    </div>
+    <div id="parent">
+      <!-- Here is the left MAIN part of the ui -->
+      <div id="left">
+        <header>
+          Enjoy Visualizing Your Model
+        </header>
+        <canvas id="c"></canvas>
+      </div>
+      <!-- Here is the right part of the ui -->
+      <div id="right">
+      <header>
+          Choose a Model from Here
+        </header>
+        <input type="file" webkitdirectory directory multiple />
+<!--
+      ## # $folder = "/var/www/html/3dModels/building"
+      ## <h1>$folder</h1> 
+      ## # $results = []
+      ## # $results += [$each for $each in os.listdir($folder) if $each.endswith('.gltf')]
+      ## <ul>
+      ##     #for $result in $results
+      ##         <li>
+      ##             $result
+      ##         </li>
+      ##     #end for
+      ## </ul>
+        
+        ## <button>Load!</button>
+-->
+      </div>
+    </div>
+  </body>
+
+<script type="module">
+    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.127.0/build/three.module.js";
+    import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.127.0/examples/jsm/controls/OrbitControls.js";
+    import { OBJLoader } from "https://cdn.jsdelivr.net/npm/three@0.127.0/examples/jsm/loaders/OBJLoader.js";
+    import { MTLLoader } from "https://cdn.jsdelivr.net/npm/three@0.127.0/examples/jsm/loaders/MTLLoader.js";
+    //   https://cdn.jsdelivr.net/npm/three@0.127.0/examples/jsm/loaders/PLYLoader.js
+
+    function main() {
+      const canvas = document.querySelector("#c");
+      const renderer = new THREE.WebGLRenderer({ canvas });
+
+      const fov = 45;
+      const aspect = 2; // the canvas default
+      const near = 0.1;
+      const far = 100;
+      const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+      camera.position.set(0, 10, 20);
+
+      const controls = new OrbitControls(camera, canvas);
+      controls.target.set(0, 5, 0);
+      controls.update();
+
+      const scene = new THREE.Scene();
+      // scene.background = new THREE.Color("blue");
+
+      const loader = new THREE.TextureLoader();
+      const backgroundTexture = loader.load("/3dModels/bg-0.jpg");
+
+      // scene = new THREE.Scene();
+      scene.background = backgroundTexture;
+
+      {
+        const skyColor = 0xb1e1ff; // light blue
+        const groundColor = 0xb97a20; // brownish orange
+        const intensity = 1;
+        const light = new THREE.HemisphereLight(
+          skyColor,
+          groundColor,
+          intensity
+        );
+        scene.add(light);
+      }
+
+      {
+        const color = 0xffffff;
+        const intensity = 1;
+        const light = new THREE.DirectionalLight(color, intensity);
+        light.position.set(5, 10, 2);
+        scene.add(light);
+        scene.add(light.target);
+      }
+
+      function frameArea(sizeToFitOnScreen, boxSize, boxCenter, camera) {
+        const halfSizeToFitOnScreen = sizeToFitOnScreen * 0.5;
+        const halfFovY = THREE.MathUtils.degToRad(camera.fov * 0.5);
+        const distance = halfSizeToFitOnScreen / Math.tan(halfFovY);
+        // compute a unit vector that points in the direction the camera is now
+        // in the xz plane from the center of the box
+        const direction = new THREE.Vector3()
+          .subVectors(camera.position, boxCenter)
+          .multiply(new THREE.Vector3(1, 0, 1))
+          .normalize();
+
+        // move the camera to a position distance units way from the center
+        // in whatever direction the camera was from the center already
+        camera.position.copy(direction.multiplyScalar(distance).add(boxCenter));
+
+        // pick some near and far values for the frustum that
+        // will contain the box.
+        camera.near = boxSize / 100;
+        camera.far = boxSize * 100;
+
+        camera.updateProjectionMatrix();
+
+        // point the camera to look at the center of the box
+        camera.lookAt(boxCenter.x, boxCenter.y, boxCenter.z);
+      }
+
+      {
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load(
+          "/3dModels/tajjin/just-tajjin.obj.mtl",
+          (mtl) => {
+            mtl.preload();
+            const objLoader = new OBJLoader();
+            objLoader.setMaterials(mtl);
+            objLoader.load("/3dModels/tajjin/just-tajjin.obj", (root) => {
+              scene.add(root);
+
+              // compute the box that contains all the stuff
+              // from root and below
+              const box = new THREE.Box3().setFromObject(root);
+
+              const boxSize = box.getSize(new THREE.Vector3()).length();
+              const boxCenter = box.getCenter(new THREE.Vector3());
+
+              // set the camera to frame the box
+              frameArea(boxSize * 1.2, boxSize, boxCenter, camera);
+
+              // update the Trackball controls to handle the new size
+              controls.maxDistance = boxSize * 10;
+              controls.target.copy(boxCenter);
+              controls.update();
+            });
+          }
+        );
+      }
+
+      function resizeRendererToDisplaySize(renderer) {
+        const canvas = renderer.domElement;
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        const needResize = canvas.width !== width || canvas.height !== height;
+        if (needResize) {
+          renderer.setSize(width, height, false);
+        }
+        return needResize;
+      }
+
+      function render() {
+        if (resizeRendererToDisplaySize(renderer)) {
+          const canvas = renderer.domElement;
+          camera.aspect = canvas.clientWidth / canvas.clientHeight;
+          camera.updateProjectionMatrix();
+        }
+
+        renderer.render(scene, camera);
+
+        requestAnimationFrame(render);
+      }
+
+      requestAnimationFrame(render);
+    }
+
+    main();
+  </script>
+
+</html>
+
