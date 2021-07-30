@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MapMint 3D Viewer</title>
-<!-- //////////////////////////////////////////////////////////////
+    <!-- ////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
@@ -87,7 +87,7 @@
         color: rgb(255, 255, 255);
       }
       button {
-		  color: black;
+        color: black;
       }
     </style>
   </head>
@@ -116,20 +116,15 @@
     <div id="parent">
       <!-- Here is the left MAIN part of the ui -->
       <div id="left">
-        <header>
-          Enjoy Visualizing Your Model
-        </header>
+        <header>Enjoy Visualizing Your Model</header>
         <canvas id="c"></canvas>
       </div>
       <!-- Here is the right part of the ui -->
       <div id="right">
-      <header>
-          Choose a Model from Here
-        </header>
+        <header>Choose a Model from Here</header>
         <!--<input type="file" webkitdirectory directory multiple />-->
 
-        
-<!--
+        <!--
       ## # $folder = "/var/www/html/3dModels/building"
       ## <h1>$folder</h1> 
       ## # $results = []
@@ -160,7 +155,7 @@
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////// -->
-<script type="module">
+  <script type="module">
     import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.127.0/build/three.module.js";
     import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.127.0/examples/jsm/controls/OrbitControls.js";
     import { OBJLoader } from "https://cdn.jsdelivr.net/npm/three@0.127.0/examples/jsm/loaders/OBJLoader.js";
@@ -240,32 +235,29 @@
 
       {
         const mtlLoader = new MTLLoader();
-        mtlLoader.load(
-          "/3dModels/tajjin/just-tajjin.obj.mtl",
-          (mtl) => {
-            mtl.preload();
-            const objLoader = new OBJLoader();
-            objLoader.setMaterials(mtl);
-            objLoader.load("/3dModels/tajjin/just-tajjin.obj", (root) => {
-              scene.add(root);
+        mtlLoader.load("/3dModels/tajjin/just-tajjin.obj.mtl", (mtl) => {
+          mtl.preload();
+          const objLoader = new OBJLoader();
+          objLoader.setMaterials(mtl);
+          objLoader.load("/3dModels/tajjin/just-tajjin.obj", (root) => {
+            scene.add(root);
 
-              // compute the box that contains all the stuff
-              // from root and below
-              const box = new THREE.Box3().setFromObject(root);
+            // compute the box that contains all the stuff
+            // from root and below
+            const box = new THREE.Box3().setFromObject(root);
 
-              const boxSize = box.getSize(new THREE.Vector3()).length();
-              const boxCenter = box.getCenter(new THREE.Vector3());
+            const boxSize = box.getSize(new THREE.Vector3()).length();
+            const boxCenter = box.getCenter(new THREE.Vector3());
 
-              // set the camera to frame the box
-              frameArea(boxSize * 1.2, boxSize, boxCenter, camera);
+            // set the camera to frame the box
+            frameArea(boxSize * 1.2, boxSize, boxCenter, camera);
 
-              // update the Trackball controls to handle the new size
-              controls.maxDistance = boxSize * 10;
-              controls.target.copy(boxCenter);
-              controls.update();
-            });
-          }
-        );
+            // update the Trackball controls to handle the new size
+            controls.maxDistance = boxSize * 10;
+            controls.target.copy(boxCenter);
+            controls.update();
+          });
+        });
       }
 
       function resizeRendererToDisplaySize(renderer) {
@@ -296,6 +288,4 @@
 
     main();
   </script>
-
 </html>
-
