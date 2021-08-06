@@ -33,7 +33,8 @@
         width: 100%;
         height: 90%;
         display: block;
-        /* margin: 20px; */
+        border-style: solid;
+        border-width: thin;
         /* For now */
         /* background-color: black; */
       }
@@ -86,6 +87,14 @@
       button {
         color: black;
       }
+      .center {
+        text-align: center;
+    }
+
+    .cmb {
+        display: block;
+        margin: 0 auto;
+    }
     </style>
   </head>
   <!-- //////////////////////////////////////////////////////////////
@@ -120,9 +129,33 @@
       <div id="right">
         <header id="header-choose">Choose a Model from Here</header>
         <!--<input type="file" webkitdirectory directory multiple />-->
-        <select name="mySelect-1" id="mySelect"></select>
 
-        <button id="modelLoader">Load!</button>
+        <div class="center" style="margin-top: 100px">
+          <select 
+            class="cmb" 
+            name="mySelect-1" 
+            id="mySelect" 
+            style="
+              font-size: large;
+              font-weight: bold;
+              text-align: center; 
+              margin-bottom: 80px
+            "
+            >
+            </select>
+        <div>        
+        
+        <button 
+          id="modelLoader"
+          style="
+            width: 100px;
+            font-size: large;
+            font-weight: bold
+          "
+        >
+          Load!
+        </button>
+
       </div>
     </div>
   </body>
@@ -272,8 +305,8 @@
     }
 
     // Get all of the available 3D models
-    const choices = ["Tajjin", "Rock"];
-    const models = { Tajjin: "/3dModels/tajjin/just-tajjin", Rock: "/3dModels/Rock/rock-1" };
+    const choices = ["Tajjin", "Rock", "GerrardHall"];
+    const models = { Tajjin: "/3dModels/tajjin/just-tajjin", Rock: "/3dModels/Rock/rock-1",  GerrardHall: "/3dModels/gerrard-hall/gerrard-hall"};
 
     // Add choices to the select
     const mySelect = document.getElementById("mySelect");
