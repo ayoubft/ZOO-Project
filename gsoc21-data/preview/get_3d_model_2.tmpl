@@ -8,113 +8,34 @@
     <title>MapMint 3D Viewer</title>
     <!-- ////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
 ////////////////////         STYLE        ///////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////// -->
     <style>
-      html,
-      body {
-        margin: 0;
-        height: 100%;
-      }
-      header {
-        font-size: large;
-        margin: 1cm;
-      }
-      #c {
-        width: 100%;
-        height: 90%;
-        display: block;
-        border-style: solid;
-        border-width: thin;
-        /* For now */
-        /* background-color: black; */
-      }
-      #parent {
-        display: flex;
-        justify-content: space-around;
-      }
-
-      #left {
-        width: 80%;
-        height: 100hv;
-        padding: 10px;
-      }
-
-      #right {
-        margin: 10px;
-        background-color: lightgray;
-        width: 20%;
-        height: 100hv;
-        padding: 30px;
-      }
-      /* ////////// NAV BAR ////////// */
-      /* Add a black background color to the top navigation */
-      .topnav {
-        background-color: rgb(122, 129, 122);
-        overflow: hidden;
-      }
-
-      /* Style the links inside the navigation bar */
-      .topnav a {
-        float: right;
-        color: #f2f2f2;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        font-size: 17px;
-      }
-
-      /* Change the color of links on hover */
-      .topnav a:hover {
-        background-color: rgb(241, 239, 239);
-        color: black;
-      }
-
-      /* Add a color to the active/current link */
-      .topnav a.active {
-        background-color: #61e6b5;
-        color: rgb(255, 255, 255);
-      }
-      button {
-        color: black;
-      }
-      .center {
-        text-align: center;
-    }
-
-    .cmb {
-        display: block;
-        margin: 0 auto;
-    }
+      html, body {margin: 0; height: 100%;}
+      header {font-size: large; margin: 1cm;}
+      button {color: black;}
+      #c {width: 100%; height: 90%; display: block; border-style: solid; border-width: thin;}
+      #parent {display: flex; justify-content: space-around;}
+      #left {width: 80%; height: 100hv; padding: 10px;}
+      #right {margin: 10px; background-color: lightgray; width: 20%; height: 100hv; padding: 30px;}
+      #modelLoader{width: 100px; font-size: large; font-weight: bold;}
+      .center {text-align: center;}
+      .cmb {display: block; margin: 0 auto;font-size: large;font-weight: bold; text-align: center; margin-bottom: 80px;}
+      .topnav {background-color: rgb(122, 129, 122); overflow: hidden;}
+      .topnav a {float: right; color: #f2f2f2; text-align: center; padding: 14px 16px; text-decoration: none; font-size: 17px;}
+      .topnav a:hover {background-color: rgb(241, 239, 239); color: black;}
+      .topnav a.active {background-color: #61e6b5; color: rgb(255, 255, 255);}      
     </style>
   </head>
   <!-- //////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
 ////////////////////          BODY        ///////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////// -->
   <body>
     <div class="topnav">
-      <a target="_blank" href="https://github.com/ayoubft/Journey-GSoC-21/wiki"
-        >About</a
-      >
+      <a target="_blank" href="https://github.com/ayoubft/Journey-GSoC-21/wiki">About</a>
       <a class="active" href="http://localhost/ui/Dashboard_bs">Home</a>
       <!-- <a href="#news">News</a>
       <a href="#contact">Contact</a> -->
@@ -128,48 +49,16 @@
       <!-- Here is the right part of the ui -->
       <div id="right">
         <header id="header-choose">Choose a Model from Here</header>
-        <!--<input type="file" webkitdirectory directory multiple />-->
-
         <div class="center" style="margin-top: 100px">
-          <select 
-            class="cmb" 
-            name="mySelect-1" 
-            id="mySelect" 
-            style="
-              font-size: large;
-              font-weight: bold;
-              text-align: center; 
-              margin-bottom: 80px
-            "
-            >
-            </select>
+          <select class="cmb" name="mySelect-1" id="mySelect"></select>
         <div>        
-        
-        <button 
-          id="modelLoader"
-          style="
-            width: 100px;
-            font-size: large;
-            font-weight: bold
-          "
-        >
-          Load!
-        </button>
-
+        <button id="modelLoader">Load!</button>
       </div>
     </div>
   </body>
   <!-- //////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
 ////////////////////         SCRIPT       ///////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////// -->
   <script type="module">
@@ -304,6 +193,7 @@
       requestAnimationFrame(render);
     }
 
+    // MY CODE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Get all of the available 3D models
     const choices = ["Tajjin", "Rock", "GerrardHall"];
     const models = { Tajjin: "/3dModels/tajjin/just-tajjin", Rock: "/3dModels/Rock/rock-1",  GerrardHall: "/3dModels/gerrard-hall/gerrard-hall"};
