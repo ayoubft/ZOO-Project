@@ -7,9 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MapMint 3D Viewer</title>
     <!-- ////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
 ////////////////////         STYLE        ///////////////////////////
-/////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////// -->
     <style>
       html, body {margin: 0; height: 100%;}
@@ -29,24 +27,18 @@
     </style>
   </head>
   <!-- //////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
 ////////////////////          BODY        ///////////////////////////
-/////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////// -->
   <body>
     <div class="topnav">
       <a target="_blank" href="https://github.com/ayoubft/Journey-GSoC-21/wiki">About</a>
       <a class="active" href="http://localhost/ui/Dashboard_bs">Home</a>
-      <!-- <a href="#news">News</a>
-      <a href="#contact">Contact</a> -->
     </div>
     <div id="parent">
-      <!-- Here is the left MAIN part of the ui -->
       <div id="left">
         <header>Enjoy Visualizing Your Model</header>
         <canvas id="c"></canvas>
       </div>
-      <!-- Here is the right part of the ui -->
       <div id="right">
         <header id="header-choose">Choose a Model from Here</header>
         <div class="center" style="margin-top: 100px">
@@ -57,17 +49,13 @@
     </div>
   </body>
   <!-- //////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
 ////////////////////         SCRIPT       ///////////////////////////
-/////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////// -->
   <script type="module">
     import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.127.0/build/three.module.js";
     import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.127.0/examples/jsm/controls/OrbitControls.js";
     import { OBJLoader } from "https://cdn.jsdelivr.net/npm/three@0.127.0/examples/jsm/loaders/OBJLoader.js";
     import { MTLLoader } from "https://cdn.jsdelivr.net/npm/three@0.127.0/examples/jsm/loaders/MTLLoader.js";
-
-    //   https://cdn.jsdelivr.net/npm/three@0.127.0/examples/jsm/loaders/PLYLoader.js
 
     function main(mtlFile, objFile) {
       const canvas = document.querySelector("#c");
@@ -193,7 +181,6 @@
       requestAnimationFrame(render);
     }
 
-    // MY CODE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Get all of the available 3D models
     const choices = ["Tajjin", "Rock", "GerrardHall"];
     const models = { Tajjin: "/3dModels/tajjin/just-tajjin", Rock: "/3dModels/Rock/rock-1",  GerrardHall: "/3dModels/gerrard-hall/gerrard-hall"};
